@@ -113,8 +113,8 @@ where $\hat{\sigma}_{t-1}^{WML}$ is the realised volatility of daily WML returns
 ## Quickstart
 
 ```bash
-git clone https://github.com/eddinenasri/alpha-research.git
-cd alpha-research
+git clone https://github.com/eddinenasri/momentum-research-pipeline.git
+cd momentum-research-pipeline
 python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
 
@@ -128,7 +128,7 @@ python src/momentum_signal.py    # Compute signals for 144 rebalancing dates
 python src/backtest.py           # Run all strategy variants
 
 # Research notebook
-jupyter notebook notebooks/research.ipynb
+jupyter notebook notebooks/notebook.ipynb
 ```
 
 ---
