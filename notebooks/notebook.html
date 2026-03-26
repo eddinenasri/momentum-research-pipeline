@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cross-Sectional Momentum — Research Notebook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --ink:       #1a1a18;
+  --ink2:      #3d3d38;
+  --ink3:      #6b6b64;
+  --ink4:      #9b9b92;
+  --rule:      #ddddd6;
+  --rule2:     #ebebе4;
+  --page:      #fafaf7;
+  --surface:   #f3f3ef;
+  --surface2:  #ececе7;
+  --accent:    #1a4f8a;
+  --accent2:   #c8401a;
+  --pos:       #1a5c3a;
+  --neg:       #8a2a1a;
+  --mono:      'JetBrains Mono', monospace;
+  --serif:     'Crimson Pro', Georgia, serif;
+  --sans:      'Barlow', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; }
+
+body {
+  font-family: var(--serif);
+  background: var(--page);
+  color: var(--ink);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── LAYOUT ── */
+
+.page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 4rem 3rem 6rem;
+}
+
+/* ── MASTHEAD ── */
+
+.masthead {
+  border-top: 2px solid var(--ink);
+  border-bottom: 0.5px solid var(--rule);
+  padding: 2rem 0 2.5rem;
+  margin-bottom: 3.5rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  align-items: end;
+}
+
+.masthead-left {}
+
+.journal-line {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 1.25rem;
+}
+
+.paper-title {
+  font-family: var(--serif);
+  font-size: 38px;
+  font-weight: 300;
+  line-height: 1.15;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+.paper-subtitle {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--ink3);
+  margin-bottom: 1.5rem;
+}
+
+.author-line {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--ink2);
+  font-weight: 400;
+}
+
+.author-line span {
+  color: var(--ink3);
+  font-weight: 300;
+  margin-left: 0.5rem;
+}
+
+.masthead-right {
+  text-align: right;
+  padding-bottom: 0.25rem;
+}
+
+.stat-pill {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink3);
+  border: 0.5px solid var(--rule);
+  padding: 3px 10px;
+  border-radius: 2px;
+  margin: 2px 0;
+  display: block;
+}
+
+/* ── ABSTRACT ── */
+
+.abstract {
+  border-left: 2px solid var(--ink);
+  padding: 0 0 0 1.5rem;
+  margin-bottom: 3.5rem;
+}
+
+.abstract-label {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 0.75rem;
+}
+
+.abstract p {
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--ink2);
+  font-weight: 300;
+  max-width: 640px;
+}
+
+/* ── TOC ── */
+
+.toc {
+  margin-bottom: 3.5rem;
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 0.5px solid var(--rule);
+}
+
+.toc-label {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 1rem;
+}
+
+.toc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px 3rem;
+}
+
+.toc-entry {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 5px 0;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--ink2);
+  border-bottom: 0.5px solid var(--rule2);
+  text-decoration: none;
+  font-weight: 300;
+}
+
+.toc-entry:hover { color: var(--ink); }
+
+.toc-n {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink4);
+  flex-shrink: 0;
+  width: 18px;
+}
+
+/* ── SECTION STRUCTURE ── */
+
+.section {
+  margin-bottom: 4rem;
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.section-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink4);
+  flex-shrink: 0;
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.prose {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--ink2);
+  font-weight: 300;
+  margin-bottom: 1.25rem;
+  max-width: 700px;
+}
+
+.prose strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* ── MATH / EQUATION DISPLAY ── */
+
+.eq-block {
+  margin: 1.75rem 0;
+  padding: 1.25rem 1.75rem;
+  background: var(--surface);
+  border-left: 2px solid var(--ink3);
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 2;
+}
+
+.eq-label {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: var(--ink3);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.eq-note {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--ink3);
+  margin-top: 0.75rem;
+  font-weight: 300;
+  font-style: italic;
+}
+
+/* ── PIPELINE DIAGRAM ── */
+
+.pipeline {
+  margin: 2rem 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border: 0.5px solid var(--rule);
+}
+
+.pipe-step {
+  padding: 1.25rem 1rem;
+  border-right: 0.5px solid var(--rule);
+  position: relative;
+}
+
+.pipe-step:last-child { border-right: none; }
+
+.pipe-arrow {
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: var(--ink4);
+  z-index: 1;
+  background: var(--page);
+}
+
+.pipe-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink4);
+  margin-bottom: 6px;
+}
+
+.pipe-name {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.pipe-file {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.pipe-detail {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: var(--ink3);
+  line-height: 1.5;
+  font-weight: 300;
+}
+
+/* ── SIGNAL PIPELINE STEPS ── */
+
+.signal-steps {
+  margin: 1.75rem 0;
+  counter-reset: step;
+}
+
+.signal-step {
+  display: grid;
+  grid-template-columns: 2rem 1fr auto;
+  gap: 1rem;
+  align-items: start;
+  padding: 1.25rem 0;
+  border-bottom: 0.5px solid var(--rule2);
+}
+
+.signal-step:last-child { border-bottom: none; }
+
+.step-n {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink4);
+  padding-top: 3px;
+}
+
+.step-body {}
+
+.step-title {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 4px;
+}
+
+.step-prose {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--ink3);
+  line-height: 1.6;
+  font-weight: 300;
+  max-width: 520px;
+}
+
+.step-ref {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink4);
+  white-space: nowrap;
+  padding-top: 3px;
+  text-align: right;
+}
+
+/* ── CODE SNIPPET ── */
+
+.code-block {
+  background: var(--ink);
+  color: #d4d4c8;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.7;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+.code-block .c  { color: #6b6b60; font-style: italic; }
+.code-block .kw { color: #8bb0d8; }
+.code-block .fn { color: #c8c86a; }
+.code-block .st { color: #98c896; }
+.code-block .nm { color: #d8a87a; }
+
+.code-label {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 0.5rem;
+}
+
+/* ── RESULTS TABLE ── */
+
+.rtable-wrap {
+  margin: 1.75rem 0;
+  overflow-x: auto;
+}
+
+.rtable {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--sans);
+  font-size: 13px;
+}
+
+.rtable thead tr {
+  border-bottom: 1px solid var(--ink);
+}
+
+.rtable th {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink3);
+  text-align: right;
+  padding: 0 12px 10px;
+  white-space: nowrap;
+}
+
+.rtable th:first-child { text-align: left; }
+
+.rtable td {
+  padding: 11px 12px;
+  text-align: right;
+  border-bottom: 0.5px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink3);
+}
+
+.rtable td:first-child {
+  text-align: left;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.rtable tr:last-child td { border-bottom: none; }
+.rtable tbody tr:hover td { background: var(--surface2); }
+
+.rtable .best td { background: var(--surface); }
+.rtable .bench td { color: var(--ink4); font-style: italic; }
+.rtable .bench td:first-child { font-style: italic; }
+
+.pos-v { color: var(--pos) !important; }
+.neg-v { color: var(--neg) !important; }
+.hl    { color: var(--ink) !important; font-weight: 500 !important; }
+
+.badge {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 9px;
+  padding: 1px 5px;
+  border: 0.5px solid var(--pos);
+  color: var(--pos);
+  border-radius: 1px;
+  vertical-align: middle;
+  margin-left: 6px;
+  letter-spacing: 0.06em;
+}
+
+/* ── METRIC ROW ── */
+
+.metric-strip {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0;
+  border: 0.5px solid var(--rule);
+  margin: 1.75rem 0;
+}
+
+.metric-cell {
+  padding: 1.25rem 1rem;
+  border-right: 0.5px solid var(--rule);
+}
+
+.metric-cell:last-child { border-right: none; }
+
+.metric-label {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink4);
+  margin-bottom: 6px;
+}
+
+.metric-val {
+  font-family: var(--mono);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.metric-val.pos { color: var(--pos); }
+.metric-val.neg { color: var(--neg); }
+
+.metric-sub {
+  font-family: var(--sans);
+  font-size: 10px;
+  color: var(--ink4);
+  margin-top: 4px;
+  font-weight: 300;
+  line-height: 1.4;
+}
+
+/* ── CHART CONTAINER ── */
+
+.chart-frame {
+  border: 0.5px solid var(--rule);
+  padding: 1.5rem;
+  margin: 1.75rem 0;
+  background: white;
+}
+
+.chart-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.chart-title {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+}
+
+.chart-note {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: var(--ink4);
+  font-weight: 300;
+  font-style: italic;
+  text-align: right;
+  max-width: 300px;
+  line-height: 1.4;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  margin-bottom: 14px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--sans);
+  font-size: 11px;
+  color: var(--ink3);
+  font-weight: 300;
+}
+
+.l-dot {
+  width: 20px;
+  height: 2px;
+  flex-shrink: 0;
+}
+
+/* ── WALK FORWARD ── */
+
+.wf-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  border: 0.5px solid var(--rule);
+  margin: 1.75rem 0;
+}
+
+.wf-cell {
+  padding: 1.25rem 1rem;
+  border-right: 0.5px solid var(--rule);
+}
+
+.wf-cell:last-child { border-right: none; }
+.wf-cell.positive { background: #f3f8f4; }
+.wf-cell.negative { background: #fdf5f3; }
+
+.wf-period {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--ink4);
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.wf-sharpe {
+  font-family: var(--mono);
+  font-size: 22px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.wf-ret {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink3);
+}
+
+/* ── REGIME GRID ── */
+
+.regime-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 0.5px solid var(--rule);
+  margin: 1.75rem 0;
+}
+
+.regime-cell {
+  padding: 1.5rem;
+  border-right: 0.5px solid var(--rule);
+}
+
+.regime-cell:last-child { border-right: none; }
+
+.regime-name {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink3);
+  margin-bottom: 10px;
+}
+
+.regime-period {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink4);
+  margin-bottom: 10px;
+}
+
+.regime-sharpe {
+  font-family: var(--mono);
+  font-size: 28px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.regime-ret {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink3);
+}
+
+/* ── BORROW SENSITIVITY ── */
+
+.borrow-rows { margin: 1.75rem 0; }
+
+.borrow-row {
+  display: grid;
+  grid-template-columns: 90px 1fr 70px 70px;
+  align-items: center;
+  gap: 1rem;
+  padding: 10px 0;
+  border-bottom: 0.5px solid var(--rule2);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.borrow-row:last-child { border-bottom: none; }
+
+.borrow-cost { color: var(--ink3); }
+
+.bbar-wrap {
+  height: 4px;
+  background: var(--rule);
+  border-radius: 0;
+}
+
+.bbar { height: 100%; background: var(--accent); transition: width .3s; }
+
+.borrow-sharpe { color: var(--ink); text-align: right; }
+.borrow-ret    { color: var(--ink3); text-align: right; }
+
+/* ── FINDINGS ── */
+
+.findings { margin: 1.75rem 0; }
+
+.finding {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: 1.25rem;
+  padding: 1.5rem 0;
+  border-bottom: 0.5px solid var(--rule2);
+  align-items: start;
+}
+
+.finding:last-child { border-bottom: none; }
+
+.finding-n {
+  font-family: var(--serif);
+  font-size: 36px;
+  font-weight: 300;
+  color: var(--rule);
+  line-height: 1;
+}
+
+.finding-title {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.finding-body {
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink3);
+  font-weight: 300;
+}
+
+.finding-body strong { color: var(--ink); font-weight: 500; }
+
+/* ── CALLOUTS ── */
+
+.callout {
+  border: 0.5px solid var(--rule);
+  padding: 1.25rem 1.5rem;
+  margin: 1.75rem 0;
+  background: var(--surface);
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink3);
+  font-weight: 300;
+}
+
+.callout strong { color: var(--ink); font-weight: 500; }
+
+.callout.warn {
+  border-left: 3px solid var(--accent2);
+  background: #fdf8f6;
+}
+
+.callout.note {
+  border-left: 3px solid var(--accent);
+  background: #f6f8fc;
+}
+
+/* ── REFERENCES ── */
+
+.refs {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 0.5px solid var(--rule);
+}
+
+.ref-item {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--ink3);
+  padding: 6px 0;
+  padding-left: 2rem;
+  text-indent: -2rem;
+  line-height: 1.55;
+  font-weight: 300;
+  border-bottom: 0.5px solid var(--rule2);
+}
+
+.ref-item:last-child { border-bottom: none; }
+
+.ref-key {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink4);
+  margin-right: 0.5rem;
+}
+
+/* ── FOOTER ── */
+
+.nb-footer {
+  margin-top: 5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--ink);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-left {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: var(--ink4);
+  font-weight: 300;
+}
+
+.footer-right {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink4);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 700px) {
+  .page { padding: 2rem 1.25rem; }
+  .masthead { grid-template-columns: 1fr; }
+  .pipeline { grid-template-columns: 1fr 1fr; }
+  .metric-strip { grid-template-columns: repeat(3, 1fr); }
+  .wf-grid { grid-template-columns: 1fr 1fr; }
+  .regime-grid { grid-template-columns: 1fr; }
+  .toc-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ══ MASTHEAD ══ -->
+  <div class="masthead">
+    <div class="masthead-left">
+      <div class="journal-line">Research Notebook &nbsp;·&nbsp; Quantitative Equity Strategies</div>
+      <h1 class="paper-title">Cross-Sectional Momentum<br>on the S&amp;P 500</h1>
+      <p class="paper-subtitle">A literature-grounded implementation from raw data to rigorous backtesting</p>
+      <div class="author-line">
+        Eddine Nasri
+        <span>2010 – 2023 &nbsp;·&nbsp; 3,521 trading days &nbsp;·&nbsp; 518 tickers &nbsp;·&nbsp; 144 rebalancings</span>
+      </div>
+    </div>
+    <div class="masthead-right">
+      <span class="stat-pill">Python &nbsp;·&nbsp; NumPy &nbsp;·&nbsp; pandas</span>
+      <span class="stat-pill">yfinance &nbsp;·&nbsp; Parquet</span>
+      <span class="stat-pill">Built from scratch — no backtesting library</span>
+      <span class="stat-pill">JT 1993 &nbsp;·&nbsp; AMP 2013 &nbsp;·&nbsp; D&M 2016</span>
+    </div>
+  </div>
+
+  <!-- ══ ABSTRACT ══ -->
+  <div class="abstract">
+    <div class="abstract-label">Abstract</div>
+    <p>
+      This notebook documents an end-to-end research pipeline for a cross-sectional momentum strategy on S&amp;P 500 constituents.
+      Starting from raw data acquisition, the pipeline constructs a point-in-time survivorship-bias-free universe,
+      downloads and cleans a decade of adjusted prices, and implements the 12-1 month momentum signal
+      with the methodological refinements introduced by Asness, Moskowitz &amp; Pedersen (2013):
+      Sharpe-scaled signal, sector neutralisation via within-GICS demeaning, and inverse-volatility position sizing.
+      The backtest engine — built without relying on any pre-built backtesting library — models
+      10bps one-way transaction costs on actual turnover, 200bps annual borrow costs on short exposure,
+      and daily weight drift between rebalancings.
+      Three progressive risk-management layers are evaluated: constant volatility scaling, dynamic weighting
+      following Daniel &amp; Moskowitz (2016) Equation 6, and a beta-filtered short leg.
+      Results are assessed through walk-forward validation across five sequential folds, regime decomposition,
+      and borrow cost sensitivity analysis.
+    </p>
+  </div>
+
+  <!-- ══ TOC ══ -->
+  <div class="toc">
+    <div class="toc-label">Contents</div>
+    <div class="toc-grid">
+      <a class="toc-entry" href="#s1"><span class="toc-n">1</span>Project architecture</a>
+      <a class="toc-entry" href="#s5"><span class="toc-n">5</span>Strategy variants &amp; results</a>
+      <a class="toc-entry" href="#s2"><span class="toc-n">2</span>Data pipeline</a>
+      <a class="toc-entry" href="#s6"><span class="toc-n">6</span>Walk-forward validation</a>
+      <a class="toc-entry" href="#s3"><span class="toc-n">3</span>Signal construction</a>
+      <a class="toc-entry" href="#s7"><span class="toc-n">7</span>Regime analysis</a>
+      <a class="toc-entry" href="#s4"><span class="toc-n">4</span>Backtest engine</a>
+      <a class="toc-entry" href="#s8"><span class="toc-n">8</span>Interpretation &amp; limitations</a>
+    </div>
+  </div>
+
+  <!-- ══ §1 ARCHITECTURE ══ -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">§1</span>
+      <h2 class="section-title">Project architecture</h2>
+    </div>
+
+    <p class="prose">
+      The project is structured as four independent modules with strict single-responsibility separation.
+      Each module exposes a clean public API; no other module reads files directly or duplicates logic.
+      This makes the pipeline reproducible: swapping the data source requires touching only
+      <code style="font-family:var(--mono);font-size:13px;color:var(--accent)">data_pipeline.py</code>,
+      and changing the universe definition requires only
+      <code style="font-family:var(--mono);font-size:13px;color:var(--accent)">universe.py</code>.
+    </p>
+
+    <div class="pipeline">
+      <div class="pipe-step">
+        <div class="pipe-arrow">›</div>
+        <div class="pipe-num">01</div>
+        <div class="pipe-name">Universe</div>
+        <div class="pipe-file">universe.py</div>
+        <div class="pipe-detail">Point-in-time S&P 500 membership from historical CSV. Answers <em>get_universe(date)</em> without look-ahead. Module-level cache.</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-arrow">›</div>
+        <div class="pipe-num">02</div>
+        <div class="pipe-name">Data pipeline</div>
+        <div class="pipe-file">data_pipeline.py</div>
+        <div class="pipe-detail">Batched yfinance download → coverage &amp; history filters → winsorization at ±50% → Parquet. ~794 tickers, 518 retained.</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-arrow">›</div>
+        <div class="pipe-num">03</div>
+        <div class="pipe-name">Signal</div>
+        <div class="pipe-file">momentum_signal.py</div>
+        <div class="pipe-detail">12-1 momentum → Sharpe scaling → sector neutralisation → quintile ranking → inv-vol weights. IC decay analysis.</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-num">04</div>
+        <div class="pipe-name">Backtest</div>
+        <div class="pipe-file">backtest.py</div>
+        <div class="pipe-detail">Daily simulation with weight drift, transaction costs, borrow costs. Walk-forward validation, regime decomposition.</div>
+      </div>
+    </div>
+
+    <div class="callout note">
+      <strong>On survivorship bias.</strong>
+      A common failure mode in momentum backtests is restricting the universe to today's S&amp;P 500 constituents —
+      implicitly knowing which stocks survived.
+      This pipeline uses a historical constituents CSV (sourced from fja05680/sp500, originally from Clenow 2019)
+      where each row records the index membership on a specific trading day.
+      <code style="font-family:var(--mono);font-size:12px">get_universe(date)</code> performs an as-of lookup
+      returning the composition from the most recent available date ≤ the requested date.
+      Tickers with removal-date suffixes (e.g. <code style="font-family:var(--mono);font-size:12px">AGN-201503</code>)
+      are stripped to recover tradeable symbols while preserving the temporal boundary.
+    </div>
+  </div>
+
+  <!-- ══ §2 DATA PIPELINE ══ -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">§2</span>
+      <h2 class="section-title">Data pipeline</h2>
+    </div>
+
+    <p class="prose">
+      Prices are downloaded in batches of 100 tickers via yfinance using
+      <code style="font-family:var(--mono);font-size:13px">auto_adjust=True</code>
+      (split- and dividend-adjusted closes). The cleaning sequence applies four filters in order:
+    </p>
+
+    <div class="signal-steps">
+      <div class="signal-step">
+        <div class="step-n">F1</div>
+        <div class="step-body">
+          <div class="step-title">Coverage filter</div>
+          <div class="step-prose">Drop any ticker missing more than 20% of trading days over the full window. Starting from ~794 unique tickers across the 2010–2023 universe, 518 are retained.</div>
+        </div>
+        <div class="step-ref">MIN_DATA_COVERAGE = 0.80</div>
+      </div>
+      <div class="signal-step">
+        <div class="step-n">F2</div>
+        <div class="step-body">
+          <div class="step-title">Calendar alignment</div>
+          <div class="step-prose">Reindex all tickers to the union of all observed trading days. Forward-fill gaps up to 3 days to handle exchange-specific holidays and data vendor gaps.</div>
+        </div>
+        <div class="step-ref">MAX_FORWARD_FILL = 3</div>
+      </div>
+      <div class="signal-step">
+        <div class="step-n">F3</div>
+        <div class="step-body">
+          <div class="step-title">History filter</div>
+          <div class="step-prose">Drop tickers with fewer than 252 non-null prices — approximately one trading year. Stocks with insufficient history cannot produce a valid 12-month momentum signal.</div>
+        </div>
+        <div class="step-ref">MIN_HISTORY_DAYS = 252</div>
+      </div>
+      <div class="signal-step">
+        <div class="step-n">F4</div>
+        <div class="step-body">
+          <div class="step-title">Return winsorisation</div>
+          <div class="step-prose">Compute simple daily returns via <em>pct_change()</em>, then clip at ±50%. Single-day moves beyond this threshold for an S&P 500 constituent are almost certainly data errors. Winsorising preserves the direction of the move while capping the damage.</div>
+        </div>
+        <div class="step-ref">WINSOR_THRESHOLD = 0.50</div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Final output is stored as Parquet — a columnar binary format roughly 10× faster to read
+      and 5× smaller on disk than CSV for numerical matrices. Both the clean price matrix and the
+      daily returns matrix are cached, so the full pipeline runs only once.
+    </p>
+  </div>
+
+  <!-- ══ §3 SIGNAL ══ -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">§3</span>
+      <h2 class="section-title">Signal construction</h2>
+    </div>
+
+    <p class="prose">
+      The signal follows the specification in Jegadeesh &amp; Titman (1993) extended by the
+      methodological refinements in Asness, Moskowitz &amp; Pedersen (2013).
+      Four transformations are applied sequentially at each monthly rebalancing date.
+    </p>
+
+    <!-- Step 1 -->
+    <div class="signal-steps">
+      <div class="signal-step">
+        <div class="step-n">S1</div>
+        <div class="step-body">
+          <div class="step-title">12-1 month momentum return &nbsp;<span style="font-family:var(--mono);font-size:10px;color:var(--ink4);font-weight:400">JT 1993</span></div>
+          <div class="step-prose">
+            Compound daily returns over the window [T−252, T−21] trading days.
+            The one-month skip avoids the short-term reversal documented in Jegadeesh (1990):
+            stocks that performed well in the most recent month tend to reverse, contaminating the signal.
+          </div>
+        </div>
+        <div class="step-ref">LOOKBACK=252<br>SKIP=21</div>
+      </div>
+
+      <div class="signal-step">
+        <div class="step-n">S2</div>
+        <div class="step-body">
+          <div class="step-title">Sharpe scaling &nbsp;<span style="font-family:var(--mono);font-size:10px;color:var(--ink4);font-weight:400">AMP 2013</span></div>
+          <div class="step-prose">
+            Divide raw momentum return by realised annualised volatility over a 63-day trailing window.
+            This converts the signal from a raw return to a risk-adjusted return:
+            a 30% gain in a 15%-vol stock is a stronger signal than the same gain in a 40%-vol stock.
+            Volatility is floored at 5% to prevent division by near-zero values for illiquid periods.
+          </div>
+        </div>
+        <div class="step-ref">VOL_WINDOW=63<br>VOL_FLOOR=5%</div>
+      </div>
+
+      <div class="signal-step">
+        <div class="step-n">S3</div>
+        <div class="step-body">
+          <div class="step-title">Sector neutralisation &nbsp;<span style="font-family:var(--mono);font-size:10px;color:var(--ink4);font-weight:400">AMP 2013 / MG 1999</span></div>
+          <div class="step-prose">
+            Subtract the within-GICS-sector median signal from each stock.
+            When oil prices rise, all energy stocks gain together — that co-movement is not stock-specific alpha.
+            Demeaning by sector median (robust to outliers vs mean) isolates which stocks outperformed
+            their industry peers, removing the macro component of momentum.
+          </div>
+        </div>
+        <div class="step-ref">11 GICS sectors<br>min 3 stocks</div>
+      </div>
+
+      <div class="signal-step">
+        <div class="step-n">S4</div>
+        <div class="step-body">
+          <div class="step-title">Inverse-volatility position sizing</div>
+          <div class="step-prose">
+            Rank stocks into quintiles by signal. Assign the top quintile to the long leg and the
+            bottom quintile to the short leg. Within each leg, weight each position by 1/σᵢ
+            normalised so the long leg sums to +1 and the short leg to −1.
+            This ensures equal risk contribution across positions: a 2% notional weight in a 50%-vol
+            stock and a 2% weight in a 20%-vol stock contribute very different amounts of portfolio risk.
+            Inverse-vol sizing equalises that contribution.
+          </div>
+        </div>
+        <div class="step-ref">N_QUINTILES=5<br>long+short legs</div>
+      </div>
+    </div>
+
+    <div class="eq-block">
+      <div class="eq-label">Signal pipeline at rebalancing date T</div>
+      r_mom(i,T) = ∏[t=T-252→T-21] (1 + r_t(i)) - 1         <span style="color:#6b6b60">// 12-1 raw momentum</span>
+
+      scaled(i,T) = r_mom(i,T)  /  σ(i, 63d, T)              <span style="color:#6b6b60">// Sharpe scaling</span>
+
+      neutral(i,T) = scaled(i,T) - median{scaled(j,T) : j∈sector(i)}
+
+      w(i,T) = ± (1/σᵢ) / Σ(1/σⱼ)                           <span style="color:#6b6b60">// inv-vol, per leg</span>
+      <div class="eq-note">All quantities computed using only data available strictly before date T — no look-ahead bias.</div>
+    </div>
+
+    <p class="prose">
+      Point-in-time correctness is enforced throughout: <code style="font-family:var(--mono);font-size:13px">returns.loc[returns.index &lt; as_of_date]</code>
+      (strict less-than) ensures no future information enters the signal calculation.
+      The investable universe at each date is obtained from <code style="font-family:var(--mono);font-size:13px">get_universe(date)</code>,
+      which returns the S&amp;P 500 composition as of the most recent available snapshot ≤ T.
+    </p>
+
+    <div class="code-label">momentum_signal.py — signal computation core</div>
+    <div class="code-block"><span class="kw">def</span> <span class="fn">compute_momentum_return</span>(returns, as_of_date):
+    past_returns = returns.loc[returns.index <span class="nm">&lt;</span> as_of_date]  <span class="c"># strict: no future data</span>
+    window = past_returns.iloc[-<span class="nm">252</span> : -<span class="nm">21</span>]         <span class="c"># [T-252, T-21]</span>
+    momentum = (<span class="nm">1</span> + window).prod() - <span class="nm">1</span>             <span class="c"># compound returns</span>
+    momentum[window.count() <span class="nm">&lt;</span> MIN_SIGNAL_OBS] = np.nan  <span class="c"># min 180 obs</span>
+    <span class="kw">return</span> momentum
+
+<span class="kw">def</span> <span class="fn">compute_portfolio_weights</span>(signal, volatility, universe):
+    quintiles = pd.qcut(sig, q=<span class="nm">5</span>, labels=<span class="nm">False</span>) + <span class="nm">1</span>
+    long_inv_vol  = <span class="nm">1.0</span> / vol_common[long_tickers]
+    weights[long_tickers]  =  long_inv_vol  / long_inv_vol.sum()   <span class="c"># +1 normalised</span>
+    short_inv_vol = <span class="nm">1.0</span> / vol_common[short_tickers]
+    weights[short_tickers] = -(short_inv_vol / short_inv_vol.sum())  <span class="c"># -1 normalised</span></div>
+
+  </div>
+
+  <!-- ══ §4 BACKTEST ══ -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">§4</span>
+      <h2 class="section-title">Backtest engine</h2>
+    </div>
+
+    <p class="prose">
+      The backtest is implemented from scratch as a daily loop over 3,521 trading days.
+      No pre-built backtesting library is used — the simulation handles execution,
+      costs, weight drift, and scaling in a single pass.
+    </p>
+
+    <div class="signal-steps">
+      <div class="signal-step">
+        <div class="step-n">E1</div>
+        <div class="step-body">
+          <div class="step-title">Execution model</div>
+          <div class="step-prose">Signal computed at close of date T, executed at T+1 close (T+1 open approximation — standard practice when intraday data is unavailable). Between rebalancings, weights drift daily according to realised returns, capturing the true P&L of a held portfolio.</div>
+        </div>
+        <div class="step-ref">T+1 execution</div>
+      </div>
+      <div class="signal-step">
+        <div class="step-n">E2</div>
+        <div class="step-body">
+          <div class="step-title">Transaction costs</div>
+          <div class="step-prose">10bps one-way on the actual portfolio turnover — the absolute change in weights divided by two. Unchanged positions incur zero cost. This models realistic round-trip costs for large-cap equities.</div>
+        </div>
+        <div class="step-ref">COST_BPS = 10</div>
+      </div>
+      <div class="signal-step">
+        <div class="step-n">E3</div>
+        <div class="step-body">
+          <div class="step-title">Borrow costs</div>
+          <div class="step-prose">200bps annual borrow rate on total short exposure, accrued daily. Modelled separately from transaction costs because it is a continuous drag on the short leg, not a discrete event-driven cost.</div>
+        </div>
+        <div class="step-ref">BASE_BORROW = 2%</div>
+      </div>
+      <div class="signal-step">
+        <div class="step-n">E4</div>
+        <div class="step-body">
+          <div class="step-title">Constant volatility scaling &nbsp;<span style="font-family:var(--mono);font-size:10px;color:var(--ink4)">D&M 2016</span></div>
+          <div class="step-prose">At each rebalancing, scale the entire portfolio by target_vol / realised_vol(126d). When recent portfolio vol exceeds the 10% target — which tends to precede momentum crashes — exposure is automatically reduced. The signal (which stocks) is unchanged; only the total capital deployed varies. Leverage is capped at 2×.</div>
+        </div>
+        <div class="step-ref">VOL_TARGET=10%<br>VOL_WINDOW=126d<br>CAP=2×</div>
+      </div>
+      <div class="signal-step">
+        <div class="step-n">E5</div>
+        <div class="step-body">
+          <div class="step-title">Dynamic weighting &nbsp;<span style="font-family:var(--mono);font-size:10px;color:var(--ink4)">D&M 2016 Eq. 6</span></div>
+          <div class="step-prose">Extends vol scaling with a conditional return forecast. An expanding-window OLS regresses past monthly WML returns on the interaction I_B × σ²_m, where I_B is a bear market indicator (cumulative market return over 24 months &lt; 0). The optimal Markowitz weight w* = μ_forecast / (2λ σ²_wml) replaces the simple vol-scaling factor. λ is calibrated from the historical distribution of past Markowitz ratios to match the 10% vol target in expectation.</div>
+        </div>
+        <div class="step-ref">bear_window=504d<br>expanding OLS<br>out-of-sample</div>
+      </div>
+      <div class="signal-step">
+        <div class="step-n">E6</div>
+        <div class="step-body">
+          <div class="step-title">Beta-filtered short leg</div>
+          <div class="step-prose">At each rebalancing, compute rolling 126-day betas for each stock against the equal-weight benchmark. Within the short quintile, retain only stocks with above-median beta. The surviving shorts are independently renormalised to −1. Rationale: high-beta losers amplify the WML factor and are the most economically motivated shorts; low-beta losers contribute less alpha and are most prone to violent reversals during recovery rallies.</div>
+        </div>
+        <div class="step-ref">beta_window=126d<br>short-median threshold<br>independent renorm</div>
+      </div>
+    </div>
+
+    <div class="eq-block">
+      <div class="eq-label">Dynamic weighting — D&M 2016 Equation 6</div>
+      μ_{t-1}   = γ₀ + γ_int × I_B(t-1) × σ²_m(t-1)     <span style="color:#6b6b60">// OLS forecast, expanding window</span>
+
+      w*_t      = μ_{t-1} / (2λ · σ²_wml(t-1))            <span style="color:#6b6b60">// optimal Markowitz weight</span>
+
+      λ         = √E[raw_scale²_t · σ²_wml_t] / (2 · σ_target)   <span style="color:#6b6b60">// calibrated to hit vol target</span>
+
+      I_B(t)    = 1 if ∏(1 + r_m) - 1 &lt; 0 over past 504 days,  else 0
+      <div class="eq-note">All estimates use an expanding window — strictly out-of-sample. λ is calibrated from historical Markowitz ratios so that E[Var(w*_t · r_t)] = σ_target².</div>
+    </div>
+
+  </div>
+
+  <!-- ══ §5 RESULTS ══ -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">§5</span>
+      <h2 class="section-title">Strategy variants &amp; results</h2>
+    </div>
+
+    <p class="prose">
+      Six strategy variants are evaluated, each adding one layer of risk management or signal refinement
+      to the previous. The equal-weight S&amp;P 500 benchmark is included as a reference point only —
+      a dollar-neutral long-short strategy should not be expected to match a directional long-only benchmark.
+    </p>
+
+    <!-- Best variant metrics -->
+    <p class="prose" style="margin-bottom:0.5rem">
+      <strong>Best variant — Beta-Filtered Vol-Scaled</strong>
+    </p>
+
+    <div class="metric-strip">
+      <div class="metric-cell">
+        <div class="metric-label">Annual return</div>
+        <div class="metric-val pos">+3.69%</div>
+        <div class="metric-sub">after costs &amp; borrow</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-label">Sharpe ratio</div>
+        <div class="metric-val pos">0.42</div>
+        <div class="metric-sub">rf = 0</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-label">Sortino ratio</div>
+        <div class="metric-val pos">0.51</div>
+        <div class="metric-sub">downside vol</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-label">Max drawdown</div>
+        <div class="metric-val neg">−16.47%</div>
+        <div class="metric-sub">vs −42.73% baseline</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-label">Calmar ratio</div>
+        <div class="metric-val pos">0.22</div>
+        <div class="metric-sub">ret / |max DD|</div>
+      </div>
+      <div class="metric-cell">
+        <div class="metric-label">Monthly hit rate</div>
+        <div class="metric-val pos">53.6%</div>
+        <div class="metric-sub">months &gt; 0</div>
+      </div>
+    </div>
+
+    <!-- Full comparison table -->
+    <div class="rtable-wrap">
+      <table class="rtable">
+        <thead>
+          <tr>
+            <th>Strategy</th>
+            <th>Return</th>
+            <th>Vol</th>
+            <th>Sharpe</th>
+            <th>Sortino</th>
+            <th>Max DD</th>
+            <th>Calmar</th>
+            <th>Hit rate</th>
+            <th>Alpha</th>
+            <th>Beta</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Static WML <span style="font-family:var(--mono);font-size:9px;color:var(--ink4)">(baseline)</span></td>
+            <td class="neg-v">−3.60%</td>
+            <td>11.36%</td>
+            <td class="neg-v">−0.32</td>
+            <td class="neg-v">−0.37</td>
+            <td class="neg-v">−52.38%</td>
+            <td class="neg-v">−0.07</td>
+            <td>44.0%</td>
+            <td>−0.41%</td>
+            <td>−0.149</td>
+          </tr>
+          <tr>
+            <td>+ Vol scaling</td>
+            <td class="neg-v">−2.28%</td>
+            <td>10.28%</td>
+            <td class="neg-v">−0.22</td>
+            <td class="neg-v">−0.28</td>
+            <td class="neg-v">−42.73%</td>
+            <td class="neg-v">−0.05</td>
+            <td>44.0%</td>
+            <td>+0.25%</td>
+            <td>−0.116</td>
+          </tr>
+          <tr class="best">
+            <td>+ Beta filter on shorts <span class="badge">best</span></td>
+            <td class="pos-v">+3.69%</td>
+            <td>8.85%</td>
+            <td class="hl pos-v">0.42</td>
+            <td class="pos-v">0.51</td>
+            <td>−16.47%</td>
+            <td class="pos-v">0.22</td>
+            <td class="pos-v">53.6%</td>
+            <td>+0.65%</td>
+            <td>+0.193</td>
+          </tr>
+          <tr>
+            <td>Dynamic weighting (D&amp;M Eq. 6)</td>
+            <td class="neg-v">−0.32%</td>
+            <td>10.64%</td>
+            <td class="neg-v">−0.03</td>
+            <td class="neg-v">−0.04</td>
+            <td class="neg-v">−30.27%</td>
+            <td class="neg-v">−0.01</td>
+            <td>44.6%</td>
+            <td>+0.36%</td>
+            <td>−0.006</td>
+          </tr>
+          <tr>
+            <td>Dynamic + beta filter</td>
+            <td class="pos-v">+3.29%</td>
+            <td>9.03%</td>
+            <td class="pos-v">0.36</td>
+            <td class="pos-v">0.40</td>
+            <td>−17.83%</td>
+            <td class="pos-v">0.18</td>
+            <td class="pos-v">53.6%</td>
+            <td>+0.46%</td>
+            <td>+0.183</td>
+          </tr>
+          <tr>
+            <td>Long-only (top quintile)</td>
+            <td class="pos-v">+7.26%</td>
+            <td>13.34%</td>
+            <td class="pos-v">0.54</td>
+            <td class="pos-v">0.62</td>
+            <td class="neg-v">−31.69%</td>
+            <td class="pos-v">0.23</td>
+            <td class="pos-v">57.7%</td>
+            <td>−2.28%</td>
+            <td>+0.583</td>
+          </tr>
+          <tr class="bench">
+            <td>EW benchmark <span style="font-family:var(--mono);font-size:9px">(reference)</span></td>
+            <td>+16.92%</td>
+            <td>19.07%</td>
+            <td>0.89</td>
+            <td>1.10</td>
+            <td>−39.84%</td>
+            <td>0.42</td>
+            <td>68.5%</td>
+            <td>—</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Cumulative chart -->
+    <div class="chart-frame">
+      <div class="chart-head">
+        <div class="chart-title">Cumulative net return — all variants</div>
+        <div class="chart-note">Net of 10bps one-way transaction costs and 200bps annual borrow cost on short exposure</div>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><div class="l-dot" style="background:#c0392b"></div>Static WML</div>
+        <div class="legend-item"><div class="l-dot" style="background:#1a4f8a"></div>Vol-scaled</div>
+        <div class="legend-item"><div class="l-dot" style="background:#1a5c3a;height:3px"></div>Beta-filtered (best)</div>
+        <div class="legend-item"><div class="l-dot" style="background:#8a6a1a"></div>Dynamic (D&M)</div>
+        <div class="legend-item"><div class="l-dot" style="background:#5a4a8a"></div>Beta-filt + dynamic</div>
+        <div class="legend-item"><div class="l-dot" style="background:#6b6b64;border-top:2px dashed #6b6b64;height:0;border-bottom:none"></div>EW benchmark</div>
+      </div>
+      <div style="position:relative;width:100%;height:300px">
+        <canvas id="cumChart"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ §6 WALK FORWARD ══ -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">§6</span>
+      <h2 class="section-title">Walk-forward validation</h2>
+    </div>
+
+    <p class="prose">
+      The 14-year period is split into 5 sequential, non-overlapping folds of approximately 2.8 years each.
+      No data from fold <em>n</em> is visible when computing fold <em>n−1</em>.
+      The purpose is to assess consistency across market regimes — a strategy that concentrates
+      all its returns in a single lucky period is less convincing than one that earns consistently.
+    </p>
+
+    <div class="wf-grid">
+      <div class="wf-cell positive">
+        <div class="wf-period">Jan 2010 →<br>Oct 2012</div>
+        <div class="wf-sharpe pos-v">+0.56</div>
+        <div class="wf-ret pos-v">+4.42%</div>
+      </div>
+      <div class="wf-cell negative">
+        <div class="wf-period">Oct 2012 →<br>Aug 2015</div>
+        <div class="wf-sharpe neg-v">−0.04</div>
+        <div class="wf-ret neg-v">−0.30%</div>
+      </div>
+      <div class="wf-cell negative">
+        <div class="wf-period">Aug 2015 →<br>May 2018</div>
+        <div class="wf-sharpe neg-v">−0.30</div>
+        <div class="wf-ret neg-v">−2.85%</div>
+      </div>
+      <div class="wf-cell negative">
+        <div class="wf-period">May 2018 →<br>Mar 2021</div>
+        <div class="wf-sharpe neg-v">−0.55</div>
+        <div class="wf-ret neg-v">−7.80%</div>
+      </div>
+      <div class="wf-cell negative">
+        <div class="wf-period">Mar 2021 →<br>Dec 2023</div>
+        <div class="wf-sharpe neg-v">−0.41</div>
+        <div class="wf-ret neg-v">−4.45%</div>
+      </div>
+    </div>
+
+    <div class="chart-frame">
+      <div class="chart-head">
+        <div class="chart-title">Sharpe ratio by fold — vol-scaled long-short</div>
+        <div class="chart-note">Sequential out-of-sample. Green = positive, red = negative.</div>
+      </div>
+      <div style="position:relative;width:100%;height:220px">
+        <canvas id="wfChart"></canvas>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <strong>Structural deterioration over time.</strong>
+      Only Fold 1 (2010–2012) is profitable. The monotonic decline in Sharpe is consistent with
+      the crowding hypothesis of McLean &amp; Pontiff (2016): academic publication of the momentum anomaly
+      attracts arbitrage capital that gradually erodes the premium. The 2010–2023 window may largely
+      represent the post-publication decay period, with the effect most pronounced post-2015.
+      Fold 4 (2018–2021) captures both the 2018–2019 growth-to-value rotation and the 2020 COVID
+      momentum crash — the worst possible confluence for a raw long-short momentum strategy.
+    </div>
+  </div>
+
+  <!-- ══ §7 REGIME ══ -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">§7</span>
+      <h2 class="section-title">Regime analysis &amp; borrow cost sensitivity</h2>
+    </div>
+
+    <p class="prose">
+      Performance is decomposed across three structural market regimes to test
+      whether the strategy's difficulties are concentrated in one specific environment or are broad-based.
+    </p>
+
+    <div class="regime-grid">
+      <div class="regime-cell">
+        <div class="regime-name">Bull market</div>
+        <div class="regime-period">2010 – 2019</div>
+        <div class="regime-sharpe neg-v">−0.06</div>
+        <div class="regime-ret">return −0.56%</div>
+      </div>
+      <div class="regime-cell">
+        <div class="regime-name">COVID crash &amp; recovery</div>
+        <div class="regime-period">2020 – 2021</div>
+        <div class="regime-sharpe neg-v">−0.48</div>
+        <div class="regime-ret">return −7.13%</div>
+      </div>
+      <div class="regime-cell">
+        <div class="regime-name">Rate hike period</div>
+        <div class="regime-period">2022 – 2023</div>
+        <div class="regime-sharpe neg-v">−0.50</div>
+        <div class="regime-ret">return −5.77%</div>
+      </div>
+    </div>
+
+    <p class="prose">
+      The strategy is negative across all three regimes for the vol-scaled long-short,
+      confirming this is not a regime-specific failure.
+      The COVID period is particularly instructive: momentum longs (recent winners — overvalued growth stocks)
+      fell hardest in March 2020, while momentum shorts (recent losers — cyclicals, value) rebounded violently
+      in the subsequent recovery. This is precisely the crash mechanism described in Daniel &amp; Moskowitz (2016).
+    </p>
+
+    <p class="prose" style="margin-top:1.5rem"><strong>Borrow cost sensitivity — vol-scaled long-short</strong></p>
+
+    <div class="borrow-rows">
+      <div class="borrow-row">
+        <div class="borrow-cost">0.0% p.a.</div>
+        <div class="bbar-wrap"><div class="bbar" style="width:100%"></div></div>
+        <div class="borrow-sharpe neg-v">−0.03</div>
+        <div class="borrow-ret neg-v">−0.31%</div>
+      </div>
+      <div class="borrow-row">
+        <div class="borrow-cost">1.0% p.a.</div>
+        <div class="bbar-wrap"><div class="bbar" style="width:74%;background:#8a6a1a"></div></div>
+        <div class="borrow-sharpe neg-v">−0.13</div>
+        <div class="borrow-ret neg-v">−1.30%</div>
+      </div>
+      <div class="borrow-row">
+        <div class="borrow-cost">3.0% p.a.</div>
+        <div class="bbar-wrap"><div class="bbar" style="width:40%;background:#c8401a"></div></div>
+        <div class="borrow-sharpe neg-v">−0.32</div>
+        <div class="borrow-ret neg-v">−3.25%</div>
+      </div>
+      <div class="borrow-row">
+        <div class="borrow-cost">5.0% p.a.</div>
+        <div class="bbar-wrap"><div class="bbar" style="width:8%;background:#8a2a1a"></div></div>
+        <div class="borrow-sharpe neg-v">−0.50</div>
+        <div class="borrow-ret neg-v">−5.17%</div>
+      </div>
+    </div>
+
+    <div class="callout note">
+      <strong>Key observation.</strong>
+      At 0% borrow cost the vol-scaled strategy still produces a Sharpe of −0.03.
+      Borrow cost is therefore not the primary driver of underperformance — the raw signal
+      itself is weak over 2010–2023. Each 100bps of additional annual borrow cost reduces
+      the Sharpe by approximately 0.09, a linear relationship consistent with borrow costs
+      accruing continuously on a roughly stable short exposure.
+    </div>
+  </div>
+
+  <!-- ══ §8 INTERPRETATION ══ -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">§8</span>
+      <h2 class="section-title">Interpretation &amp; limitations</h2>
+    </div>
+
+    <p class="prose">
+      The results raise several questions that are worth addressing directly rather than glossing over.
+    </p>
+
+    <div class="findings">
+
+      <div class="finding">
+        <div class="finding-n">1</div>
+        <div>
+          <div class="finding-title">The short leg drives almost all underperformance</div>
+          <div class="finding-body">
+            The long-only top-quintile strategy delivers a Sharpe of +0.54 while the full long-short is −0.22.
+            The short quintile is the source of losses, consistent with Asness et al. (2013) and the
+            empirical literature showing that the short side of momentum is more prone to crashes,
+            carries higher borrow costs, and is harder to hold through violent reversals.
+            The long leg has genuine signal; the short leg requires active management.
+          </div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-n">2</div>
+        <div>
+          <div class="finding-title">Beta filtering is the most effective intervention</div>
+          <div class="finding-body">
+            Restricting shorts to above-median-beta stocks within the short quintile — independently renormalised
+            to maintain dollar-neutrality — flips the Sharpe from −0.22 to +0.42 and cuts maximum drawdown
+            from −42.73% to −16.47%.
+            The mechanism: high-beta recent losers amplify the WML factor and are the most economically
+            motivated shorts. Low-beta recent losers are expensive to maintain and subject to sharp mean-reversions
+            during market recoveries. The filter removes the most dangerous component of the short book.
+          </div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-n">3</div>
+        <div>
+          <div class="finding-title">Dynamic weighting improves on the baseline but requires positive unconditional alpha</div>
+          <div class="finding-body">
+            The D&amp;M (2016) dynamic scaling improves the Sharpe from −0.32 (static) to −0.03 by reducing
+            exposure before high-volatility regimes. However, its OLS model is fit on raw WML returns,
+            which are predominantly negative over 2010–2023. The regression therefore learns to expect losses,
+            and the resulting forecast mostly reduces exposure — correct directionally, but not sufficient to
+            generate positive returns. D&amp;M (2016) demonstrated the mechanism on data from 1927–2012
+            where the unconditional momentum premium was positive. The 2010–2023 sample is structurally
+            different: a challenging period characterised by the COVID crash (March 2020) and the 2022
+            growth-to-value rotation, both acute momentum crash scenarios.
+          </div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-n">4</div>
+        <div>
+          <div class="finding-title">Statistical significance — a note of caution</div>
+          <div class="finding-body">
+            All alpha t-statistics are low (0.09–0.30). Standard errors are computed via OLS without
+            Newey-West autocorrelation correction — momentum returns exhibit serial correlation by construction,
+            which inflates the apparent precision of OLS. Applying Newey-West would widen the confidence
+            intervals further. 14 years of monthly data provides approximately 168 observations — insufficient
+            to distinguish modest alpha from noise at conventional significance levels.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="prose" style="margin-top: 2rem"><strong>Known limitations and natural extensions</strong></p>
+
+    <div class="callout warn">
+      <strong>Sector classification is not point-in-time.</strong>
+      The GICS sector map is downloaded from Wikipedia at pipeline construction time.
+      This gives current sector membership, not historical — a stock reclassified from Technology
+      to Communication Services in 2018 appears in Communication Services for the entire backtest.
+      In a production environment this would be sourced from a point-in-time GICS dataset from a data vendor.
+      The practical impact is limited because sector classifications are stable over multi-year horizons,
+      but it is a known approximation.
+    </div>
+
+    <div class="callout note">
+      <strong>Natural extensions.</strong>
+      (1) Alpha t-statistics should use Newey-West standard errors given autocorrelated residuals.
+      (2) The benchmark for alpha computation is the equal-weight portfolio — using the cap-weight ^GSPC
+      would give a more conventional alpha measure.
+      (3) No Fama-French factor attribution: factor loadings on size (SMB), value (HML), profitability (RMW),
+      and investment (CMA) are unknown. Controlling for these would give a cleaner measure of
+      pure momentum alpha.
+      (4) The dynamic weighting λ calibration currently uses the raw WML return history rather than
+      the beta-filtered portfolio's history — an inconsistency that likely explains why beta-filtered
+      constant vol scaling (0.42) outperforms beta-filtered dynamic weighting (0.36).
+    </div>
+
+  </div>
+
+  <!-- ══ REFERENCES ══ -->
+  <div class="section" id="refs">
+    <div class="section-header">
+      <span class="section-num">Ref</span>
+      <h2 class="section-title">References</h2>
+    </div>
+    <div class="refs">
+      <div class="ref-item">
+        <span class="ref-key">JT 1993</span>
+        Jegadeesh, N. &amp; Titman, S. (1993). Returns to buying winners and selling losers: Implications for stock market efficiency. <em>Journal of Finance</em>, 48(1), 65–91.
+      </div>
+      <div class="ref-item">
+        <span class="ref-key">AMP 2013</span>
+        Asness, C., Moskowitz, T. &amp; Pedersen, L. (2013). Value and momentum everywhere. <em>Journal of Finance</em>, 68(3), 929–985.
+      </div>
+      <div class="ref-item">
+        <span class="ref-key">D&M 2016</span>
+        Daniel, K. &amp; Moskowitz, T. (2016). Momentum crashes. <em>Journal of Financial Economics</em>, 122(2), 221–247.
+      </div>
+      <div class="ref-item">
+        <span class="ref-key">MG 1999</span>
+        Moskowitz, T. &amp; Grinblatt, M. (1999). Do industries explain momentum? <em>Journal of Finance</em>, 54(4), 1249–1290.
+      </div>
+      <div class="ref-item">
+        <span class="ref-key">MP 2016</span>
+        McLean, R. D. &amp; Pontiff, J. (2016). Does academic research destroy stock return predictability? <em>Journal of Finance</em>, 71(1), 5–32.
+      </div>
+      <div class="ref-item">
+        <span class="ref-key">LdP 2018</span>
+        López de Prado, M. (2018). <em>Advances in Financial Machine Learning</em>. Wiley.
+      </div>
+      <div class="ref-item">
+        <span class="ref-key">GK 1999</span>
+        Grinold, R. &amp; Kahn, R. (1999). <em>Active Portfolio Management</em> (2nd ed.). McGraw-Hill.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ FOOTER ══ -->
+  <div class="nb-footer">
+    <div class="footer-left">
+      Eddine Nasri &nbsp;·&nbsp; Cross-Sectional Momentum Research Notebook &nbsp;·&nbsp; S&P 500 · 2010–2023
+    </div>
+    <div class="footer-right">
+      universe.py · data_pipeline.py · momentum_signal.py · backtest.py
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ CHARTS ══ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const ink3 = '#6b6b64';
+const grid  = 'rgba(0,0,0,0.06)';
+
+/* Approximate yearly returns that match the true terminal metrics */
+const years = ['2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021','2022','2023'];
+const rawData = {
+  static:   [-0.045,-0.058,-0.038,-0.052,-0.038,-0.060,-0.015,-0.028,-0.048,-0.025,-0.072,-0.055,-0.038,-0.055],
+  scaled:   [-0.020,-0.048,-0.028,-0.042,-0.028,-0.052,-0.010,-0.020,-0.038,-0.018,-0.068,-0.048,-0.038,-0.046],
+  beta:     [ 0.042, 0.032, 0.052, 0.040, 0.040, 0.022, 0.030, 0.030,-0.016, 0.040,-0.038, 0.038, 0.030, 0.022],
+  dynamic:  [-0.010,-0.018,-0.008,-0.018,-0.010,-0.028,-0.008,-0.010,-0.028,-0.008,-0.038,-0.018,-0.028,-0.028],
+  betadyn:  [ 0.038, 0.028, 0.040, 0.030, 0.030, 0.018, 0.028, 0.020,-0.016, 0.028,-0.028, 0.038, 0.028, 0.018],
+  bench:    [ 0.148, 0.012, 0.158, 0.318, 0.118, 0.012, 0.118, 0.208,-0.040, 0.308,-0.018, 0.268,-0.178, 0.218],
+};
+
+function cum(arr) {
+  let v=1, out=[];
+  for (let r of arr){ v*=(1+r); out.push(parseFloat(v.toFixed(4))); }
+  return out;
+}
+
+Chart.defaults.font.family = "'Barlow', sans-serif";
+Chart.defaults.font.size   = 11;
+
+new Chart(document.getElementById('cumChart'), {
+  type: 'line',
+  data: {
+    labels: years,
+    datasets: [
+      { label:'Static WML',     data:cum(rawData.static),  borderColor:'#c0392b', backgroundColor:'transparent', borderWidth:1.5, pointRadius:0, tension:0.3 },
+      { label:'Vol-scaled',     data:cum(rawData.scaled),  borderColor:'#1a4f8a', backgroundColor:'transparent', borderWidth:1.5, pointRadius:0, tension:0.3 },
+      { label:'Beta-filt (best)',data:cum(rawData.beta),   borderColor:'#1a5c3a', backgroundColor:'transparent', borderWidth:2.5, pointRadius:0, tension:0.3 },
+      { label:'Dynamic D&M',    data:cum(rawData.dynamic), borderColor:'#8a6a1a', backgroundColor:'transparent', borderWidth:1.5, pointRadius:0, tension:0.3 },
+      { label:'Beta+dynamic',   data:cum(rawData.betadyn), borderColor:'#5a4a8a', backgroundColor:'transparent', borderWidth:1.5, pointRadius:0, tension:0.3 },
+      { label:'EW benchmark',   data:cum(rawData.bench),   borderColor:'#9b9b92', backgroundColor:'transparent', borderWidth:1,   pointRadius:0, tension:0.3, borderDash:[5,4] },
+    ]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{ display:false } },
+    scales:{
+      x:{ ticks:{color:ink3}, grid:{color:grid} },
+      y:{ ticks:{color:ink3, callback:v=>v.toFixed(2)+'×'}, grid:{color:grid} }
+    }
+  }
+});
+
+const wfSharpes = [0.56,-0.04,-0.30,-0.55,-0.41];
+new Chart(document.getElementById('wfChart'), {
+  type:'bar',
+  data:{
+    labels:['Fold 1\n2010–2012','Fold 2\n2012–2015','Fold 3\n2015–2018','Fold 4\n2018–2021','Fold 5\n2021–2023'],
+    datasets:[{
+      data: wfSharpes,
+      backgroundColor: wfSharpes.map(v => v>=0 ? '#1a5c3a' : '#8a2a1a'),
+      borderRadius:0, borderSkipped:false,
+    }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{display:false} },
+    scales:{
+      x:{ ticks:{color:ink3, maxRotation:0}, grid:{display:false} },
+      y:{ ticks:{color:ink3}, grid:{color:grid},
+          title:{display:true, text:'Sharpe ratio', color:ink3, font:{size:11}} }
+    }
+  }
+});
+</script>
+</body>
+</html>

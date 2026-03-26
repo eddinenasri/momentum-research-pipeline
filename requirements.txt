@@ -1,0 +1,23 @@
+# Core data
+numpy>=1.26
+pandas>=2.1
+pyarrow>=14.0
+
+# Data download
+yfinance>=0.2.36
+
+# HTML parsing (universe scraper)
+requests>=2.31
+beautifulsoup4>=4.12
+
+# Statistics
+scipy>=1.11
+statsmodels>=0.14
+
+# Visualisation (notebook only)
+matplotlib>=3.8
+plotly>=5.18
+
+# Notebook
+jupyter>=1.0
+ipykernel>=6.0
