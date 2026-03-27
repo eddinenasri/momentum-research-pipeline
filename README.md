@@ -4,8 +4,7 @@
 **Author:** Eddine Nasri · [eddinenasri@gmail.com](mailto:eddinenasri@gmail.com)
 
 > **Full methodology, results, and performance attribution:**
-> [`notebooks/research.ipynb`](notebooks/research.ipynb) · [`notebook.html`](notebook.html) *(pre-rendered, no setup required)*
-
+> [`notebooks/notebook.ipynb`](notebooks/notebook.ipynb) · [`docs/notebook.pdf`](docs/notebook.pdf) *(pre-rendered, no setup required)*
 ---
 
 ## Overview
@@ -24,8 +23,8 @@ The full analysis signal diagnostics, performance attribution, walk-forward vali
 
 | Notebook | Format | How to use |
 |---|---|---|
-| [`notebook.html`](notebook.html) | Pre-rendered HTML | Open directly in a browser no setup required |
-| [`notebooks/research.ipynb`](notebooks/research.ipynb) | Jupyter notebook | Fork the repo, run the pipeline, explore interactively |
+| [`docs/notebook.pdf`](docs/notebook.pdf) | PDF File | Document the methodology
+| [`notebooks/notebook.ipynb`](notebooks/notebook.ipynb) | Jupyter notebook | Fork the repo, run the pipeline, explore interactively |
 
 ---
 
@@ -122,7 +121,7 @@ pip install -r requirements.txt
 curl -L "https://raw.githubusercontent.com/fja05680/sp500/master/S%26P%20500%20Historical%20Components%20%26%20Changes(01-17-2026).csv" \
      -o "data/universe/sp500_historical_components.csv"
 
-# Run pipeline (10–15 min end-to-end)
+# Run pipeline (a few min end-to-end)
 python src/data_pipeline.py      # Download and clean ~794 tickers
 python src/momentum_signal.py    # Compute signals for 144 rebalancing dates
 python src/backtest.py           # Run all strategy variants
